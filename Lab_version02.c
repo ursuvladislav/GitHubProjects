@@ -25,16 +25,15 @@ int main() {
     }
 
     if ((x2 - x1) * dx < 0) {
-        printf("Знак dX не соответствует направлению от начальному X к конечному X.\n");
+        printf("Знак dX не соответствует направлению от X1 к X2.\n");
         return 1;
     }
-
 
     printf("\n%12s\t%12s\n", "X", "F(X)");
     printf("--------------------------------------\n");
 
     for (double x = x1;
-         (dx > 0) ? (x <= x2 + EPS) : (x >= x2 - EPS);
+         (dx > 0 && x <= x2 + EPS) || (dx < 0 && x >= x2 - EPS);
          x += dx)
     {
         double F;
@@ -43,7 +42,7 @@ int main() {
             F = a * x * x + b * b * x;
 
         } else if (a > 0 && fabs(x) <= EPS) {
-            if (fabs(x - c) <= EPS) {
+            if (fabs(x - c) < EPS) {
                 printf("%12.5g\t%12s\n", x, "деление на 0");
                 continue;
             }
